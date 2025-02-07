@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ProductListing from "@/components/ProductListing.vue";
+import ProductListing from '@/components/ProductListing.vue'
 </script>
 
 <template>
@@ -7,4 +7,3 @@ import ProductListing from "@/components/ProductListing.vue";
     <ProductListing />
   </main>
 </template>
-

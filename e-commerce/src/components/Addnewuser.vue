@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Sign Up</h2>
+    <h2>Add new user</h2>
     <form @submit.prevent="handleSignUp">
       <input v-model="username" type="text" placeholder="Username" required />
       <input v-model="email" type="email" placeholder="Email" required />
@@ -16,12 +16,6 @@
       <button type="submit" :disabled="authStore.loading">Sign Up</button>
       <p v-if="authStore.error" class="error">{{ authStore.error }}</p>
     </form>
-
-    <p>OR</p>
-    <div>
-      <button @click="authStore.googleLogin">Sign Up with Google</button>
-      <p v-if="authStore.error" class="error">{{ authStore.error }}</p>
-    </div>
   </div>
 </template>
 
