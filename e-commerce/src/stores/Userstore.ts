@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { db, auth } from "../../Firebase/index";
-import { onAuthStateChanged } from "firebase/auth";
+import { db, auth, doc, getDoc, setDoc, deleteDoc } from "../../Firebase/index";
+import { onAuthStateChanged, deleteUser } from "firebase/auth";
 
 // Define types for user profile
 interface Address {
@@ -35,6 +34,7 @@ interface UserProfile {
 export const useUserStore = defineStore("userStore", {
   state: () => ({
     userId: null as string | null,
+    loading: true, // Track loading state
     userProfile: {
       name: "",
       email: "",
@@ -48,14 +48,19 @@ export const useUserStore = defineStore("userStore", {
   actions: {
     // Initialize user store and fetch user data
     async initUser() {
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          this.userId = user.uid;
-          await this.loadUserProfile();
-        } else {
-          this.userId = null;
-          this.resetUserProfile();
-        }
+      this.loading = true;
+      return new Promise<void>((resolve) => {
+        onAuthStateChanged(auth, async (user) => {
+          if (user) {
+            this.userId = user.uid;
+            await this.loadUserProfile();
+          } else {
+            this.userId = null;
+            this.resetUserProfile();
+          }
+          this.loading = false;
+          resolve();
+        });
       });
     },
 
@@ -122,6 +127,19 @@ export const useUserStore = defineStore("userStore", {
         paymentMethods: [],
         preferences: {},
       };
+    },
+
+    // Delete user account
+    async deleteUserAccount() {
+      if (!this.userId || !auth.currentUser) return;
+      try {
+        await deleteDoc(doc(db, "users", this.userId));
+        await deleteUser(auth.currentUser);
+        this.resetUserProfile();
+        this.userId = null;
+      } catch (error) {
+        console.error("Error deleting account:", error);
+      }
     },
   },
 });

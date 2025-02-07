@@ -1,5 +1,7 @@
 <template>
-    <button @click="authStore.logout()">Logout</button>
+    <button @click="authStore.logout()">
+      <RouterLink to="/">logout</RouterLink>
+    </button>
   </template>
   
   <script setup lang="ts">
