@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+// import HomeView from '../views/HomeView.vue'
 import { useAuthStore } from "@/stores/authStore";
 
 const router = createRouter({
@@ -8,8 +8,24 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      component:() => import('../views/HomeView.vue'),
     },
+    {
+      path: "/product/:id",
+      name: 'product',
+      component: ()=> import('../components/Productdetails.vue')
+    },
+    {
+      path: "/order",
+      name: 'order',
+      component: ()=> import('../components/Order.vue')
+    },
+    {
+      path: "/userprofile",
+      name: 'userprofile',
+      component: ()=> import('../components/Userprofile.vue')
+    },
+    
     {
       path: '/about',
       name: 'about',
@@ -26,9 +42,20 @@ const router = createRouter({
       component: () => import('../components/Login.vue'),
     },
     {
+      path: '/cart',
+      name: 'cart',
+      component: () => import('../components/Cart.vue'),
+    },
+    {
       path: '/admin',
       name: 'admin',
       component: () => import('../views/AdminView.vue'),
+      meta: { requiresAuth: true, requiresRole: "admin" }, // Protect this route with role and auth
+    },
+    {
+      path: '/adminproduct',
+      name: 'adminproducts',
+      component: () => import('../components/Adminproducts.vue'),
       meta: { requiresAuth: true, requiresRole: "admin" }, // Protect this route with role and auth
     },
   ],
