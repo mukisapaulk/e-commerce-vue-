@@ -13,16 +13,24 @@
           <!-- Table Header -->
           <thead class="bg-gray-50">
             <tr>
-              <th class="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">
+              <th
+                class="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider"
+              >
                 Username
               </th>
-              <th class="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">
+              <th
+                class="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider"
+              >
                 Email
               </th>
-              <th class="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">
+              <th
+                class="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider"
+              >
                 Role
               </th>
-              <th class="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">
+              <th
+                class="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider"
+              >
                 Actions
               </th>
             </tr>

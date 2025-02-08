@@ -1,10 +1,7 @@
 <template>
   <div class="container mx-auto p-6 bg-white shadow-md rounded-lg border dark:bg-gray-900">
     <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100">Add New User</h2>
-    <form
-      @submit.prevent="handleSignUp"
-      class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center"
-    >
+    <form @submit.prevent="handleSignUp" class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
       <!-- Username -->
       <div class="flex flex-col md:flex-row items-center">
         <label for="username" class="md:w-1/3 text-gray-700 dark:text-gray-300">Username:</label>
@@ -73,7 +70,6 @@
     </form>
   </div>
 </template>
-
 
 <script setup lang="ts">
 import { ref } from 'vue'

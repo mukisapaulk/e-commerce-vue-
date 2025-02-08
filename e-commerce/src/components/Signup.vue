@@ -123,15 +123,14 @@ const email = ref<string>('')
 const password = ref<string>('')
 const role = ref<string>('customer') // Default to customer
 const authStore = useAuthStore()
-const router = useRouter() 
+const router = useRouter()
 
 const handleSignUp = async () => {
   try {
     await authStore.signUp(email.value, password.value, username.value, role.value)
-    router.push('/login') 
+    router.push('/login')
   } catch (error) {
     console.error('Sign-up error:', error)
   }
 }
 </script>
-

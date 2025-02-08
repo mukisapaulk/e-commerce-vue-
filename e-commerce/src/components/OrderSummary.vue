@@ -40,6 +40,34 @@
 import { useOrderStore } from '@/stores/orderStore' // Adjust path if needed
 import { ref, onMounted } from 'vue'
 
+// Import Stripe type
+import { loadStripe, Stripe } from '@stripe/stripe-js'
+
+// Order Item Type
+interface OrderItem {
+  id: string
+  name: string
+  price: number
+  quantity: number
+}
+
+// Order Type
+interface Order {
+  id: string
+  fullName: string
+  email: string
+  phone: string
+  address: string
+  items: OrderItem[]
+  total: number
+}
+
+// Payment Session Response Type
+interface PaymentSession {
+  id: string
+  stripePublicKey: string
+}
+
 // Order Store
 const orderStore = useOrderStore()
 
@@ -47,29 +75,42 @@ const orderStore = useOrderStore()
 onMounted(() => {
   // Ensure the order is loaded, either from store or database
   if (!orderStore.order) {
-    // Optionally fetch the order if it's not available yet
-    orderStore.fetchOrder() // Define this action in your order store
+    orderStore.fetchOrder() // Ensure this method exists in the store
   }
 })
 
 // Payment initiation function
 const initiatePayment = async () => {
-  // Call your backend to create a payment session (e.g., Stripe or PayPal)
-  const response = await fetch('/api/create-checkout-session', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      orderId: orderStore.order.id,
-      total: orderStore.order.total,
-    }),
-  })
+  if (!orderStore.order) {
+    console.error('Order is not available')
+    return
+  }
 
-  const session = await response.json()
+  try {
+    // Call your backend to create a payment session
+    const response = await fetch('/api/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        orderId: orderStore.order.id,
+        total: orderStore.order.total,
+      }),
+    })
 
-  // Redirect to the payment gateway (Stripe, for example)
-  const stripe = Stripe(session.stripePublicKey) // Assuming stripePublicKey is returned
-  stripe.redirectToCheckout({ sessionId: session.id })
+    if (!response.ok) throw new Error('Failed to create payment session')
+
+    const session: PaymentSession = await response.json()
+
+    // Initialize Stripe
+    const stripe: Stripe | null = await loadStripe(session.stripePublicKey)
+    if (!stripe) throw new Error('Stripe failed to initialize')
+
+    // Redirect to the payment gateway
+    await stripe.redirectToCheckout({ sessionId: session.id })
+  } catch (error) {
+    console.error('Payment error:', error)
+  }
 }
 </script>

@@ -86,13 +86,13 @@ import { useRouter } from 'vue-router'
 const email = ref<string>('')
 const password = ref<string>('')
 const authStore = useAuthStore()
-const router = useRouter() 
+const router = useRouter()
 
 const handleLogin = async () => {
   try {
-  authStore.login(email.value, password.value)
-  router.push('/') 
-} catch (error) {
+    authStore.login(email.value, password.value)
+    router.push('/')
+  } catch (error) {
     console.error('Sign-up error:', error)
   }
 }

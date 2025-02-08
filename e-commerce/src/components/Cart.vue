@@ -97,19 +97,17 @@
               Clear Cart
             </button>
             <button
-  @click="finishOrder"
-  class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 text-center"
->
-  Finish Your Order
-</button>
-
+              @click="finishOrder"
+              class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 text-center"
+            >
+              Finish Your Order
+            </button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
 
 <script setup lang="ts">
 import { useCartStore } from '@/stores/cartStore'
@@ -158,7 +156,7 @@ const finishOrder = () => {
   if (authStore.user) {
     router.push('/order')
   } else {
-    router.push('/login') 
+    router.push('/login')
   }
 }
 </script>

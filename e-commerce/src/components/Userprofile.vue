@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import LogoutBtn from './Logoutbtn.vue';
-import Userinfo from './Userinfo.vue';
+import Userinfo from './Userinfo.vue'
+import Logoutbtn from './Logoutbtn.vue'
 </script>
 
 <template>
   <main>
-    <LogoutBtn/>
-   <Userinfo/>
-   
+    <Logoutbtn />
+    <Userinfo />
   </main>
 </template>

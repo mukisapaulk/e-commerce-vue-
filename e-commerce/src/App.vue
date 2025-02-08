@@ -7,7 +7,7 @@
       </RouterLink>
 
       <!-- Navigation -->
-      <nav class="hidden md:flex space-x-4 items-center ">
+      <nav class="hidden md:flex space-x-4 items-center">
         <RouterLink to="/" class="hover:text-yellow-500 font-medium">Home</RouterLink>
         <RouterLink to="/cart" class="hover:text-yellow-500 relative font-medium">
           Cart
@@ -21,7 +21,9 @@
 
         <!-- Admin-only Links -->
         <template v-if="authStore.role === 'admin'">
-          <RouterLink to="/adminproduct" class="hover:text-yellow-500 font-medium">Products</RouterLink>
+          <RouterLink to="/adminproduct" class="hover:text-yellow-500 font-medium"
+            >Products</RouterLink
+          >
           <RouterLink to="/adminuser" class="hover:text-yellow-500 font-medium">Users</RouterLink>
         </template>
 
@@ -35,7 +37,7 @@
         <template v-else>
           <RouterLink
             to="/signup"
-            class=" font-bold px-4 py-1 bg-yellow-600 text-white rounded-xl shadow-md hover:bg-yellow-700 transition-all"
+            class="font-bold px-4 py-1 bg-yellow-600 text-white rounded-xl shadow-md hover:bg-yellow-700 transition-all"
           >
             Sign Up
           </RouterLink>
@@ -85,7 +87,6 @@
 import { onMounted } from 'vue'
 import { useAuthStore } from '@/stores/authStore'
 import { useCartStore } from '@/stores/cartStore'
-// import LogoutButton from '@/components/LogoutBtn.vue'
 import { ref } from 'vue'
 import { MenuIcon, UserIcon } from 'lucide-vue-next'
 
