@@ -1,58 +1,105 @@
 <template>
-  <div class="container mx-auto p-6">
-    <h1 class="text-2xl font-bold mb-4">Place Your Order</h1>
+  <div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-3xl font-bold text-gray-900 mb-8">Place Your Order</h1>
 
-    <!-- Display Cart Items -->
-    <div v-if="cartStore.itemCount === 0" class="text-gray-500">
-      <p>Your cart is empty. Add items before placing an order.</p>
-    </div>
-
-    <div v-else>
-      <!-- Order Summary -->
-      <div class="border p-4 rounded shadow mb-6">
-        <h2 class="text-xl font-semibold mb-2">Order Summary</h2>
-        <ul>
-          <li v-for="item in cartStore.items" :key="item.id" class="border-b py-2">
-            <div class="flex justify-between">
-              <span>{{ item.name }} (x{{ item.quantity }})</span>
-              <span>${{ (item.price * item.quantity).toFixed(2) }}</span>
-            </div>
-          </li>
-        </ul>
-        <p class="mt-4 font-semibold">Total: ${{ cartStore.totalPrice.toFixed(2) }}</p>
+      <!-- Empty Cart Message -->
+      <div v-if="cartStore.itemCount === 0" class="text-center text-gray-600">
+        <p class="text-lg">Your cart is empty. Add items before placing an order.</p>
+        <RouterLink
+          to="/"
+          class="mt-4 inline-block px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+        >
+          Continue Shopping
+        </RouterLink>
       </div>
 
-      <!-- Shipping Details Form -->
-      <form @submit.prevent="placeOrder" class="border p-4 rounded shadow">
-        <h2 class="text-xl font-semibold mb-2">Shipping Details</h2>
-
-        <div class="mb-3">
-          <label class="block text-gray-700">Full Name:</label>
-          <input v-model="order.fullName" type="text" required class="w-full p-2 border rounded" />
+      <!-- Order Content -->
+      <div v-else class="space-y-8">
+        <!-- Order Summary -->
+        <div class="bg-white p-6 border border-gray-200 rounded-lg shadow-sm">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">Order Summary</h2>
+          <ul class="space-y-4">
+            <li
+              v-for="item in cartStore.items"
+              :key="item.id"
+              class="flex justify-between items-center border-b pb-4"
+            >
+              <div class="flex-1">
+                <p class="text-lg font-semibold text-gray-700">{{ item.name }}</p>
+                <p class="text-gray-600">Quantity: {{ item.quantity }}</p>
+              </div>
+              <p class="text-lg font-medium text-green-500">
+                ${{ (item.price * item.quantity).toFixed(2) }}
+              </p>
+            </li>
+          </ul>
+          <p class="mt-6 text-xl font-bold text-green-600">
+            Total: ${{ cartStore.totalPrice.toFixed(2) }}
+          </p>
         </div>
 
-        <div class="mb-3">
-          <label class="block text-gray-700">Email:</label>
-          <input v-model="order.email" type="email" required class="w-full p-2 border rounded" />
-        </div>
-
-        <div class="mb-3">
-          <label class="block text-gray-700">Phone Number:</label>
-          <input v-model="order.phone" type="text" required class="w-full p-2 border rounded" />
-        </div>
-
-        <div class="mb-3">
-          <label class="block text-gray-700">Shipping Address:</label>
-          <textarea v-model="order.address" required class="w-full p-2 border rounded"></textarea>
-        </div>
-
-        <button
-          type="submit"
-          class="mt-4 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-800 w-full"
+        <!-- Shipping Details Form -->
+        <form
+          @submit.prevent="placeOrder"
+          class="bg-white p-6 border border-gray-200 rounded-lg shadow-sm"
         >
-          Place Order
-        </button>
-      </form>
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Shipping Details</h2>
+
+          <div class="space-y-4">
+            <!-- Full Name -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+              <input
+                v-model="order.fullName"
+                type="text"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+            </div>
+
+            <!-- Email -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <input
+                v-model="order.email"
+                type="email"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+            </div>
+
+            <!-- Phone Number -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+              <input
+                v-model="order.phone"
+                type="text"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+            </div>
+
+            <!-- Shipping Address -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Shipping Address</label>
+              <textarea
+                v-model="order.address"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Place Order Button -->
+          <button
+            type="submit"
+            class="mt-6 w-full px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            Place Order
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </template>
